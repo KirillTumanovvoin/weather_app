@@ -3,142 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Оденься по погоде 🌤️</title>
-
-    <!-- Bootstrap 5 -->
+    <title>Погода в городах России</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- Bootstrap Icons -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <!-- Наши стили -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
-
-  <body class="bg-gradient-main">
-    <!-- ═══ Навигация ═══ -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary-custom shadow">
-      <div class="container">
-        <a class="navbar-brand fw-bold fs-4" href="{{ url_for('index') }}">
-          🌤️ Оденься по погоде
-        </a>
-        <span class="navbar-text text-white-50 small d-none d-md-block">
-          Погода и рекомендации для 11 городов России
-        </span>
-      </div>
+  <body>
+    <!-- Навигация -->
+    <nav class="site-nav">
+      <a href="{{ url_for('index') }}" class="nav-brand"> Погода по городам </a>
     </nav>
 
-    <!-- ═══ Главный блок ═══ -->
-    <main class="container py-5">
-      <!-- Заголовок -->
-      <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold text-white mb-3">Выберите город 🗺️</h1>
-        <p class="lead text-white-75">
-          Узнайте актуальную погоду, местное время и получите рекомендации по
-          одежде
-        </p>
+    <!-- Основной контент -->
+    <div class="page-wrap">
+      <div class="page-header">
+        <h1>Выберите город</h1>
+        <p>Текущая погода и рекомендации по одежде для городов России</p>
       </div>
 
       <!-- Поиск -->
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-6">
-          <div class="input-group shadow-sm">
-            <span class="input-group-text bg-white border-0">
-              <i class="bi bi-search text-muted"></i>
-            </span>
-            <input
-              type="text"
-              id="searchInput"
-              class="form-control border-0 ps-0"
-              placeholder="Найти город..."
-              aria-label="Поиск города"
-            />
-          </div>
-        </div>
+      <div class="search-wrap">
+        <!-- иконка лупы -->
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Поиск города..."
+          autocomplete="off"
+        />
       </div>
 
-      <!-- Сетка карточек городов -->
-      <div class="row g-3" id="citiesGrid">
+      <!-- Сетка городов -->
+      <div class="cities-grid" id="citiesGrid">
         {% for city_name, city_data in cities.items() %}
-        <div
-          class="col-6 col-md-4 col-lg-3 city-card-wrapper"
+        <a
+          href="{{ url_for('weather', city_name=city_name) }}"
+          class="city-card"
           data-city="{{ city_name }}"
         >
-          <a
-            href="{{ url_for('weather', city_name=city_name) }}"
-            class="text-decoration-none"
+          <div class="city-name">{{ city_name }}</div>
+          <div class="city-tz">
+            {{ city_data.tz.split('/')[-1].replace('_', ' ') }}
+          </div>
+          <!-- стрелка вправо -->
+          <svg
+            class="city-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <div
-              class="card city-card h-100 border-0 shadow-sm text-center p-3"
-            >
-              <div class="city-emoji display-4 mb-2">{{ city_data.emoji }}</div>
-              <h5 class="card-title fw-semibold mb-1">{{ city_name }}</h5>
-              <p class="card-text text-muted small">
-                <i class="bi bi-clock me-1"></i>
-                {{ city_data.tz.split('/')[-1].replace('_', ' ') }}
-              </p>
-              <div class="mt-auto">
-                <span class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                  Узнать погоду
-                </span>
-              </div>
-            </div>
-          </a>
-        </div>
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
         {% endfor %}
       </div>
 
-      <!-- Сообщение «ничего не найдено» -->
-      <div id="noResults" class="text-center text-white mt-4 d-none">
-        <i class="bi bi-emoji-frown fs-1"></i>
-        <p class="mt-2">Город не найден. Проверьте написание.</p>
-      </div>
-    </main>
+      <!-- Ничего не найдено -->
+      <div class="no-results" id="noResults">Ничего не найдено</div>
+    </div>
 
-    <!-- ═══ Подвал ═══ -->
-    <footer class="text-center text-white-50 py-4 small">
+    <!-- Подвал -->
+    <footer class="site-footer">
       Данные:
-      <a
-        href="https://openweathermap.org"
-        class="text-white-50"
-        target="_blank"
-        rel="noopener"
+      <a href="https://openweathermap.org" target="_blank" rel="noopener"
         >OpenWeatherMap</a
       >
-      &nbsp;|&nbsp; Сделано с ❤️ на Flask &amp; Bootstrap 5
+      &nbsp;&middot;&nbsp; Flask &amp; Python
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-      /**
-       * Живой поиск по городам.
-       * Скрывает карточки, не совпадающие с запросом.
-       */
-      const searchInput = document.getElementById("searchInput");
-      const cards = document.querySelectorAll(".city-card-wrapper");
-      const noResults = document.getElementById("noResults");
+      /* Живой поиск по городам */
+      const input = document.getElementById("searchInput");
+      const cards = document.querySelectorAll(".city-card");
+      const noRes = document.getElementById("noResults");
 
-      searchInput.addEventListener("input", function () {
-        const query = this.value.toLowerCase().trim();
-        let visibleCount = 0;
-
+      input.addEventListener("input", function () {
+        const q = this.value.toLowerCase().trim();
+        let visible = 0;
         cards.forEach((card) => {
-          const cityName = card.dataset.city.toLowerCase();
-          const matches = cityName.includes(query);
-          card.classList.toggle("d-none", !matches);
-          if (matches) visibleCount++;
+          const match = card.dataset.city.toLowerCase().includes(q);
+          card.style.display = match ? "" : "none";
+          if (match) visible++;
         });
-
-        noResults.classList.toggle("d-none", visibleCount > 0);
+        noRes.style.display = visible === 0 ? "block" : "none";
       });
     </script>
   </body>
