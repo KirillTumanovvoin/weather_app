@@ -2,26 +2,23 @@
    Переменные
 ══════════════════════════════════════════════ */
 :root {
-  --bg: #f0f4f8;
-  --surface: #ffffff;
-  --primary: #3b6fd4;
-  --primary-dk: #2a52a8;
-  --accent: #e8724a;
-  --text: #1a202c;
-  --text-muted: #718096;
-  --border: #e2e8f0;
-  --radius: 12px;
-  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --transition: 0.2s ease;
+  --bg: #0d0d0d;
+  --bg-card: #1a1a1a;
+  --bg-hover: #242424;
+  --primary: #4a90e2;
+  --primary-dk: #357ab8;
+  --accent: #e25a5a;
+  --text: #e8e8e8;
+  --text-muted: #888888;
+  --border: #2a2a2a;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* ══════════════════════════════════════════════
-   Сброс и база
+   База
 ══════════════════════════════════════════════ */
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -30,7 +27,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 15px;
   line-height: 1.6;
   min-height: 100vh;
@@ -40,50 +37,43 @@ body {
    Навигация
 ══════════════════════════════════════════════ */
 .site-nav {
-  background: var(--surface);
+  background: var(--bg-card);
   border-bottom: 1px solid var(--border);
   padding: 0 24px;
-  height: 56px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow-sm);
 }
 
 .nav-brand {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--primary);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
   text-decoration: none;
-  letter-spacing: -0.3px;
 }
 
 .nav-brand:hover {
-  color: var(--primary-dk);
+  color: var(--primary);
 }
 
 .btn-back {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 16px;
+  padding: 8px 16px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--bg);
-  color: var(--text);
-  font-size: 13px;
+  color: var(--text-muted);
+  font-size: 14px;
   font-weight: 500;
   text-decoration: none;
-  transition: var(--transition);
 }
 
 .btn-back:hover {
-  background: var(--surface);
-  border-color: var(--primary);
-  color: var(--primary);
+  background: var(--bg-hover);
+  color: var(--text);
 }
 
 .btn-back svg {
@@ -93,7 +83,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Основной контейнер
+   Контейнер
 ══════════════════════════════════════════════ */
 .page-wrap {
   max-width: 1100px;
@@ -102,22 +92,21 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Заголовок страницы
+   Заголовок
 ══════════════════════════════════════════════ */
 .page-header {
   margin-bottom: 32px;
 }
 
 .page-header h1 {
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.5px;
+  margin-bottom: 4px;
 }
 
 .page-header p {
   color: var(--text-muted);
-  margin-top: 4px;
   font-size: 14px;
 }
 
@@ -126,13 +115,13 @@ body {
 ══════════════════════════════════════════════ */
 .search-wrap {
   position: relative;
-  max-width: 360px;
+  max-width: 400px;
   margin-bottom: 28px;
 }
 
 .search-wrap svg {
   position: absolute;
-  left: 12px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
   width: 16px;
@@ -143,19 +132,17 @@ body {
 
 .search-input {
   width: 100%;
-  padding: 9px 12px 9px 38px;
+  padding: 10px 14px 10px 42px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
+  border-radius: var(--radius);
+  background: var(--bg-card);
   font-size: 14px;
   color: var(--text);
   outline: none;
-  transition: var(--transition);
 }
 
 .search-input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 111, 212, 0.12);
 }
 
 .search-input::placeholder {
@@ -167,52 +154,31 @@ body {
 ══════════════════════════════════════════════ */
 .cities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 /* ══════════════════════════════════════════════
    Карточка города
 ══════════════════════════════════════════════ */
 .city-card {
-  background: var(--surface);
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 18px;
   text-decoration: none;
   color: var(--text);
   display: block;
-  transition: var(--transition);
   position: relative;
-  overflow: hidden;
-}
-
-.city-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--primary);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--transition);
 }
 
 .city-card:hover {
+  background: var(--bg-hover);
   border-color: var(--primary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-  color: var(--text);
-}
-
-.city-card:hover::before {
-  transform: scaleX(1);
 }
 
 .city-name {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
 }
@@ -224,13 +190,12 @@ body {
 
 .city-arrow {
   position: absolute;
-  right: 16px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  stroke: var(--border);
-  transition: var(--transition);
+  stroke: var(--text-muted);
 }
 
 .city-card:hover .city-arrow {
@@ -238,7 +203,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Пустой поиск
+   Ничего не найдено
 ══════════════════════════════════════════════ */
 .no-results {
   display: none;
@@ -249,10 +214,10 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Страница погоды — шапка города
+   Шапка города
 ══════════════════════════════════════════════ */
 .city-header {
-  background: var(--surface);
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px 32px;
@@ -260,10 +225,9 @@ body {
 }
 
 .city-title {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin-bottom: 6px;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .city-meta {
@@ -277,13 +241,13 @@ body {
 .city-meta span {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .city-meta svg {
   width: 14px;
   height: 14px;
-  stroke: var(--text-muted);
+  stroke: currentColor;
 }
 
 #localTime {
@@ -293,20 +257,20 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Двухколоночный layout
+   Две колонки
 ══════════════════════════════════════════════ */
 .weather-layout {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 20px;
   align-items: start;
 }
 
 /* ══════════════════════════════════════════════
-   Карточка (общая)
+   Карточка
 ══════════════════════════════════════════════ */
 .card {
-  background: var(--surface);
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -315,32 +279,31 @@ body {
 .card-head {
   padding: 16px 20px;
   border-bottom: 1px solid var(--border);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--text-muted);
 }
 
 .card-body {
-  padding: 20px;
+  padding: 24px 20px;
 }
 
 /* ══════════════════════════════════════════════
-   Блок температуры
+   Температура
 ══════════════════════════════════════════════ */
 .temp-row {
   display: flex;
   align-items: flex-end;
   gap: 12px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .temp-big {
-  font-size: 56px;
-  font-weight: 700;
+  font-size: 52px;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -2px;
   color: var(--text);
 }
 
@@ -358,7 +321,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Таблица деталей погоды
+   Детали погоды
 ══════════════════════════════════════════════ */
 .weather-details {
   display: grid;
@@ -366,14 +329,14 @@ body {
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   overflow: hidden;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .detail-cell {
-  background: var(--surface);
-  padding: 12px 14px;
+  background: var(--bg);
+  padding: 14px 16px;
 }
 
 .detail-label {
@@ -381,7 +344,7 @@ body {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .detail-value {
@@ -391,18 +354,18 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Теги сезон / время суток
+   Теги
 ══════════════════════════════════════════════ */
 .tags {
   display: flex;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 18px;
   flex-wrap: wrap;
 }
 
 .tag {
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 5px 14px;
+  border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
   background: var(--bg);
@@ -411,7 +374,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   Блок рекомендаций
+   Список одежды
 ══════════════════════════════════════════════ */
 .clothing-list {
   list-style: none;
@@ -422,7 +385,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 9px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
   font-size: 14px;
   color: var(--text);
@@ -442,34 +405,34 @@ body {
   margin-top: 7px;
 }
 
-/* Полоска уровня холода вверху карточки */
+/* Полоски по уровню */
 .card.level-arctic {
-  border-top: 3px solid #7c3aed;
+  border-left: 3px solid #9b59b6;
 }
 .card.level-very_cold {
-  border-top: 3px solid #2563eb;
+  border-left: 3px solid #3498db;
 }
 .card.level-cold {
-  border-top: 3px solid #0ea5e9;
+  border-left: 3px solid #1abc9c;
 }
 .card.level-cool {
-  border-top: 3px solid #10b981;
+  border-left: 3px solid #2ecc71;
 }
 .card.level-warm {
-  border-top: 3px solid #f59e0b;
+  border-left: 3px solid #f39c12;
 }
 .card.level-hot {
-  border-top: 3px solid #ef4444;
+  border-left: 3px solid #e74c3c;
 }
 
 /* ══════════════════════════════════════════════
-   Совет дня
+   Совет
 ══════════════════════════════════════════════ */
 .tip-box {
   background: var(--bg);
   border-left: 3px solid var(--primary);
-  border-radius: 0 8px 8px 0;
-  padding: 12px 16px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 16px;
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.6;
@@ -478,27 +441,31 @@ body {
 .tip-box strong {
   display: block;
   color: var(--text);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
 /* ══════════════════════════════════════════════
-   Блок ошибки
+   Ошибка
 ══════════════════════════════════════════════ */
 .error-box {
   max-width: 480px;
   margin: 80px auto;
   text-align: center;
+  padding: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .error-code {
   font-size: 72px;
-  font-weight: 800;
-  color: var(--border);
+  font-weight: 700;
+  color: var(--accent);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .error-box h2 {
@@ -517,14 +484,13 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 22px;
+  padding: 10px 24px;
   background: var(--primary);
   color: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: var(--transition);
 }
 
 .btn-primary:hover {
@@ -543,7 +509,7 @@ body {
 ══════════════════════════════════════════════ */
 .site-footer {
   text-align: center;
-  padding: 24px 0;
+  padding: 28px 0;
   font-size: 12px;
   color: var(--text-muted);
   border-top: 1px solid var(--border);
@@ -577,7 +543,7 @@ body {
     font-size: 42px;
   }
   .page-wrap {
-    padding: 20px 16px 40px;
+    padding: 28px 16px 40px;
   }
 
   .cities-grid {
@@ -591,6 +557,6 @@ body {
   }
 
   .weather-details {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }

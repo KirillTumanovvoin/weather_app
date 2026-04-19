@@ -4,32 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Погода в городах России</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <!-- Навигация -->
     <nav class="site-nav">
       <a href="{{ url_for('index') }}" class="nav-brand"> Погода по городам </a>
     </nav>
 
-    <!-- Основной контент -->
     <div class="page-wrap">
       <div class="page-header">
         <h1>Выберите город</h1>
-        <p>Текущая погода и рекомендации по одежде для городов России</p>
+        <p>Текущая погода и рекомендации по одежде</p>
       </div>
 
-      <!-- Поиск -->
       <div class="search-wrap">
-        <!-- иконка лупы -->
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -45,11 +36,9 @@
           id="searchInput"
           class="search-input"
           placeholder="Поиск города..."
-          autocomplete="off"
         />
       </div>
 
-      <!-- Сетка городов -->
       <div class="cities-grid" id="citiesGrid">
         {% for city_name, city_data in cities.items() %}
         <a
@@ -61,7 +50,6 @@
           <div class="city-tz">
             {{ city_data.tz.split('/')[-1].replace('_', ' ') }}
           </div>
-          <!-- стрелка вправо -->
           <svg
             class="city-arrow"
             viewBox="0 0 24 24"
@@ -76,21 +64,17 @@
         {% endfor %}
       </div>
 
-      <!-- Ничего не найдено -->
       <div class="no-results" id="noResults">Ничего не найдено</div>
     </div>
 
-    <!-- Подвал -->
     <footer class="site-footer">
       Данные:
       <a href="https://openweathermap.org" target="_blank" rel="noopener"
         >OpenWeatherMap</a
       >
-      &nbsp;&middot;&nbsp; Flask &amp; Python
     </footer>
 
     <script>
-      /* Живой поиск по городам */
       const input = document.getElementById("searchInput");
       const cards = document.querySelectorAll(".city-card");
       const noRes = document.getElementById("noResults");
