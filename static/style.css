@@ -1,0 +1,174 @@
+/* ══════════════════════════════════════════════
+   Глобальные переменные
+══════════════════════════════════════════════ */
+:root {
+  --color-primary: #2563eb;
+  --color-accent: #f59e0b;
+  --color-success: #10b981;
+  --radius-card: 1rem;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --transition: 0.25s ease;
+}
+
+/* ══════════════════════════════════════════════
+   Фон и базовые стили
+══════════════════════════════════════════════ */
+body {
+  min-height: 100vh;
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+/* Градиентный фон главной страницы */
+.bg-gradient-main {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #0ea5e9 100%);
+}
+
+/* Вспомогательный класс прозрачности текста */
+.text-white-75 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* ══════════════════════════════════════════════
+   Навигация
+══════════════════════════════════════════════ */
+.bg-primary-custom {
+  background: rgba(15, 30, 80, 0.85) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* ══════════════════════════════════════════════
+   Карточки городов (главная страница)
+══════════════════════════════════════════════ */
+.city-card {
+  border-radius: var(--radius-card);
+  background: #fff;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+  cursor: pointer;
+}
+
+.city-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.25);
+}
+
+.city-card:hover .btn-outline-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.city-emoji {
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* ══════════════════════════════════════════════
+   Карточки погоды
+══════════════════════════════════════════════ */
+.weather-card,
+.clothing-card {
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+/* Большая температура */
+.temp-display {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* ══════════════════════════════════════════════
+   Цветовые уровни карточки одежды
+══════════════════════════════════════════════ */
+.level-arctic {
+  border-top: 5px solid #7c3aed;
+} /* фиолетовый — экстрем. холод */
+.level-very_cold {
+  border-top: 5px solid #2563eb;
+} /* синий — сильный мороз      */
+.level-cold {
+  border-top: 5px solid #0ea5e9;
+} /* голубой — холодно          */
+.level-cool {
+  border-top: 5px solid #10b981;
+} /* зелёный — прохладно        */
+.level-warm {
+  border-top: 5px solid #f59e0b;
+} /* жёлтый — тепло             */
+.level-hot {
+  border-top: 5px solid #ef4444;
+} /* красный — жарко            */
+
+/* ══════════════════════════════════════════════
+   Список одежды
+══════════════════════════════════════════════ */
+.clothing-item {
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  transition: background var(--transition);
+}
+
+.clothing-item:hover {
+  background: #f0f9ff;
+}
+
+/* ══════════════════════════════════════════════
+   Блок «Совет дня»
+══════════════════════════════════════════════ */
+.alert-tip {
+  background: linear-gradient(135deg, #fef9c3, #fef3c7);
+  border-left: 4px solid var(--color-accent);
+  color: #78350f;
+}
+
+/* ══════════════════════════════════════════════
+   Поисковая строка
+══════════════════════════════════════════════ */
+#searchInput:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.input-group {
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.input-group .input-group-text,
+.input-group .form-control {
+  border-radius: 0;
+}
+
+/* ══════════════════════════════════════════════
+   Адаптивность
+══════════════════════════════════════════════ */
+@media (max-width: 576px) {
+  .temp-display {
+    font-size: 2.2rem;
+  }
+  .city-emoji {
+    font-size: 2rem !important;
+  }
+}
+
+/* Плавное появление карточек */
+.city-card-wrapper {
+  animation: fadeInUp 0.4s ease both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

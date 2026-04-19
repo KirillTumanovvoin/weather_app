@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% if data %}{{ data.city_name }} — погода{% else %}Ошибка{% endif %} |
+      Оденься по погоде
+    </title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body class="bg-gradient-main">
+    <!-- ═══ Навигация ═══ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary-custom shadow">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+          🌤️ Оденься по погоде
+        </a>
+        <!-- Кнопка «Назад» -->
+        <a
+          href="{{ url_for('index') }}"
+          class="btn btn-outline-light btn-sm rounded-pill px-3"
+        >
+          <i class="bi bi-arrow-left me-1"></i>На главную
+        </a>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <!-- ══ Блок ошибки ══════════════════════════════════════ -->
+      {% if error %}
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-7">
+          <div class="card border-0 shadow text-center p-5">
+            <div class="display-1 mb-3">😕</div>
+            <h2 class="fw-bold text-danger mb-3">Что-то пошло не так</h2>
+            <p class="text-muted mb-4">{{ error }}</p>
+            <a
+              href="{{ url_for('index') }}"
+              class="btn btn-primary rounded-pill px-4"
+            >
+              <i class="bi bi-arrow-left me-2"></i>Вернуться к выбору города
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ Блок с данными ════════════════════════════════════ -->
+      {% elif data %}
+
+      <!-- Заголовок города -->
+      <div class="text-center mb-4">
+        <div class="display-3">{{ data.city_emoji }}</div>
+        <h1 class="display-5 fw-bold text-white mt-2">{{ data.city_name }}</h1>
+        <p class="text-white-75">
+          <i class="bi bi-clock me-1"></i>
+          Местное время:
+          <strong id="localTime">{{ data.local_time.time }}</strong>
+          &nbsp;·&nbsp; {{ data.local_time.date }} &nbsp;·&nbsp; {{
+          data.local_time.utc_offset }}
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- ── Карточка погоды ─────────────────────────────── -->
+        <div class="col-lg-5">
+          <div class="card border-0 shadow weather-card h-100">
+            <div class="card-body p-4">
+              <h5 class="card-title fw-semibold mb-3">
+                <i class="bi bi-thermometer-sun text-warning me-2"></i>
+                Текущая погода
+              </h5>
+
+              <!-- Иконка + температура -->
+              <div class="d-flex align-items-center mb-3">
+                <img
+                  src="{{ data.icon_url }}"
+                  alt="{{ data.weather.description }}"
+                  width="80"
+                  height="80"
+                  class="me-3"
+                />
+                <div>
+                  <div class="temp-display fw-bold text-primary">
+                    {{ data.weather.temp }}°C
+                  </div>
+                  <p class="mb-0 text-muted text-capitalize">
+                    {{ data.weather.description }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Детали погоды -->
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span class="text-muted">
+                    <i class="bi bi-thermometer-half me-2"></i>Ощущается
+                  </span>
+                  <strong>{{ data.weather.feels_like }}°C</strong>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span class="text-muted">
+                    <i class="bi bi-droplet me-2"></i>Влажность
+                  </span>
+                  <strong>{{ data.weather.humidity }}%</strong>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span class="text-muted">
+                    <i class="bi bi-wind me-2"></i>Ветер
+                  </span>
+                  <strong>{{ data.weather.wind_speed }} м/с</strong>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span class="text-muted">
+                    <i class="bi bi-speedometer me-2"></i>Давление
+                  </span>
+                  <strong>{{ data.weather.pressure }} мм рт.ст.</strong>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center px-0"
+                >
+                  <span class="text-muted">
+                    <i class="bi bi-eye me-2"></i>Видимость
+                  </span>
+                  <strong>{{ data.weather.visibility }} км</strong>
+                </li>
+              </ul>
+
+              <!-- Сезон и время суток -->
+              <div class="d-flex gap-2 mt-3 flex-wrap">
+                <span class="badge bg-info text-dark rounded-pill px-3 py-2">
+                  {% if data.season == 'зима' %}❄️ {% elif data.season ==
+                  'весна' %}🌸 {% elif data.season == 'лето' %}☀️ {% else %}🍂{%
+                  endif %} {{ data.season | capitalize }}
+                </span>
+                <span class="badge bg-secondary rounded-pill px-3 py-2">
+                  {% if data.time_of_day == 'утро' %}🌅 {% elif data.time_of_day
+                  == 'день' %}🌞 {% elif data.time_of_day == 'вечер' %}🌆 {%
+                  else %}🌙{% endif %} {{ data.time_of_day | capitalize }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Карточка рекомендаций ───────────────────────── -->
+        <div class="col-lg-7">
+          <div
+            class="card border-0 shadow clothing-card h-100
+                    level-{{ data.clothing.level }}"
+          >
+            <div class="card-body p-4">
+              <h5 class="card-title fw-semibold mb-3">
+                {{ data.clothing.emoji }} Что надеть сегодня?
+              </h5>
+
+              <!-- Список одежды -->
+              <ul class="clothing-list list-unstyled mb-4">
+                {% for item in data.clothing.items %}
+                <li class="clothing-item mb-2">
+                  <i class="bi bi-check-circle-fill text-success me-2"></i>
+                  {{ item }}
+                </li>
+                {% endfor %}
+              </ul>
+
+              <!-- Совет дня -->
+              <div class="alert alert-tip border-0 rounded-3">
+                <strong>💡 Совет дня:</strong><br />
+                {{ data.clothing.tip }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /row -->
+
+      <!-- Кнопка «Назад» внизу страницы -->
+      <div class="text-center mt-5">
+        <a
+          href="{{ url_for('index') }}"
+          class="btn btn-light btn-lg rounded-pill shadow-sm px-5"
+        >
+          <i class="bi bi-arrow-left me-2"></i>Выбрать другой город
+        </a>
+      </div>
+
+      {% endif %}
+    </main>
+
+    <!-- ═══ Подвал ═══ -->
+    <footer class="text-center text-white-50 py-4 small mt-4">
+      Данные:
+      <a
+        href="https://openweathermap.org"
+        class="text-white-50"
+        target="_blank"
+        rel="noopener"
+        >OpenWeatherMap</a
+      >
+      &nbsp;|&nbsp; Сделано с ❤️ на Flask &amp; Bootstrap 5
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      /**
+       * Автообновление часов на странице каждую секунду.
+       * Клиент сам считает время, чтобы стрелка не прыгала.
+       */
+      (function () {
+        const timeEl = document.getElementById("localTime");
+        if (!timeEl) return;
+
+        // Разбираем начальное время из шаблона (формат HH:MM)
+        const [initH, initM] = timeEl.textContent.trim().split(":").map(Number);
+        const startedAt = Date.now();
+
+        // Время старта в секундах с начала суток
+        let startSeconds = initH * 3600 + initM * 60;
+
+        function tick() {
+          const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+          const total = (startSeconds + elapsed) % 86400;
+          const h = Math.floor(total / 3600);
+          const m = Math.floor((total % 3600) / 60);
+          timeEl.textContent =
+            String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+        }
+
+        tick();
+        setInterval(tick, 1000);
+      })();
+    </script>
+  </body>
+</html>

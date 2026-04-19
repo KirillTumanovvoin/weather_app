@@ -1,0 +1,68 @@
+{
+  "Москва": {
+    "lat": 55.7558,
+    "lon": 37.6173,
+    "tz": "Europe/Moscow",
+    "emoji": "🏛️"
+  },
+  "Санкт-Петербург": {
+    "lat": 59.9343,
+    "lon": 30.3351,
+    "tz": "Europe/Moscow",
+    "emoji": "🌉"
+  },
+  "Калининград": {
+    "lat": 54.7104,
+    "lon": 20.5071,
+    "tz": "Europe/Kaliningrad",
+    "emoji": "🏰"
+  },
+  "Самара": {
+    "lat": 53.1959,
+    "lon": 50.1002,
+    "tz": "Europe/Samara",
+    "emoji": "🚀"
+  },
+  "Екатеринбург": {
+    "lat": 56.8389,
+    "lon": 60.6057,
+    "tz": "Asia/Yekaterinburg",
+    "emoji": "⛰️"
+  },
+  "Новосибирск": {
+    "lat": 55.0084,
+    "lon": 82.9357,
+    "tz": "Asia/Novosibirsk",
+    "emoji": "🌲"
+  },
+  "Красноярск": {
+    "lat": 56.0152,
+    "lon": 92.8932,
+    "tz": "Asia/Krasnoyarsk",
+    "emoji": "🦅"
+  },
+  "Иркутск": {
+    "lat": 52.2864,
+    "lon": 104.305,
+    "tz": "Asia/Irkutsk",
+    "emoji": "🌊"
+  },
+  "Якутск": {
+    "lat": 62.0355,
+    "lon": 129.6759,
+    "tz": "Asia/Yakutsk",
+    "emoji": "🥶"
+  },
+  "Владивосток": {
+    "lat": 43.1333,
+    "lon": 131.9103,
+    "tz": "Asia/Vladivostok",
+    "emoji": "⚓"
+  },
+  "Камчатка": {
+    "lat": 52.9788,
+    "lon": 158.3948,
+    "tz": "Asia/Kamchatka",
+    "emoji": "🌋"
+  }
+}
